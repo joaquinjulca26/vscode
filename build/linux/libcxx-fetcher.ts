@@ -15,13 +15,13 @@ const root = path.dirname(path.dirname(import.meta.dirname));
 
 const d = debug('libcxx-fetcher');
 
-export async function downloadLibcxxHeaders(outDir: string, electronVersion: string, lib_name: string): Promise<void> {
-	if (await fs.existsSync(path.resolve(outDir, 'include'))) {
-		return;
-	}
-	if (!await fs.existsSync(outDir)) {
-		await fs.mkdirSync(outDir, { recursive: true });
-	}
+if (fs.existsSync(path.resolve(outDir, 'include'))) {
+    return;
+}
+
+if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+}
 
 	d(`downloading ${lib_name}_headers`);
 	const headers = await downloadArtifact({
